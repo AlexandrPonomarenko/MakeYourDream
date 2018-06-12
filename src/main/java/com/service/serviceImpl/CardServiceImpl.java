@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@Service("cardService")
 @Transactional
 public class CardServiceImpl implements CardService{
 
@@ -41,5 +41,10 @@ public class CardServiceImpl implements CardService{
     @Override
     public void deleteByIdNumberCard(Integer numberCard) {
         cardDAO.deleteByNumberCard(numberCard);
+    }
+
+    @Override
+    public void updateCard(Card card) {
+        cardDAO.updateCard(card);
     }
 }

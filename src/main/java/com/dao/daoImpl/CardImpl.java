@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.NoResultException;
 import java.util.List;
 
-@Repository("CardDAO")
+@Repository("cardDAO")
 public class CardImpl extends AbstractDAO<Integer, Card> implements CardDAO{
 
     @SuppressWarnings("unchecked")
@@ -58,5 +58,10 @@ public class CardImpl extends AbstractDAO<Integer, Card> implements CardDAO{
     @Override
     public Card findById(int id) {
         return getByKey(id);
+    }
+
+    @Override
+    public void updateCard(Card card) {
+        update(card);
     }
 }

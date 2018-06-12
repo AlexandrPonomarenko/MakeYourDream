@@ -4,12 +4,13 @@ import com.dao.AbstractDAO;
 import com.dao.UserDAO;
 import com.model.User;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import java.util.Collection;
 import java.util.List;
 
-@Repository("UserDAO")
+@Repository("userDAO")
 public class UserImpl extends AbstractDAO<Integer, User> implements UserDAO{
 
     public User findById(int id) {
@@ -27,6 +28,10 @@ public class UserImpl extends AbstractDAO<Integer, User> implements UserDAO{
                     .createQuery("SELECT u FROM User u WHERE u.login LIKE :login")
                     .setParameter("login", login)
                     .getSingleResult();
+            if(user != null){
+                initializeCollection(user.getThemes());
+                initializeCollection(user.getCards());
+            }
             return user;
         }catch (NoResultException e){
             return null;
@@ -40,7 +45,7 @@ public class UserImpl extends AbstractDAO<Integer, User> implements UserDAO{
 
     public void deleteByLogin(String login) {
         User user = (User) getEntityManager()
-                .createQuery("SELECT u FROM User u WHERE u.login LIKE : login")
+                .createQuery("SELECT u FROM User u WHERE u.login LIKE:login")
                 .setParameter("login", login)
                 .getSingleResult();
         delete(user);
@@ -51,6 +56,13 @@ public class UserImpl extends AbstractDAO<Integer, User> implements UserDAO{
         List<User> users = getEntityManager()
                 .createQuery("SELECT u FROM User u ORDER BY u.name ASC")
                 .getResultList();
+
+        if(users != null){
+            for (User user: users){
+                initializeCollection(user.getCards());
+                initializeCollection(user.getThemes());
+            }
+        }
         return users;
     }
 
@@ -60,4 +72,14 @@ public class UserImpl extends AbstractDAO<Integer, User> implements UserDAO{
         }
         collection.iterator().hasNext();
     }
+
+    @Override
+    public void updateUser(User user) {
+        update(user);
+    }
+
+//    @Override
+//    public void flushEM() {
+//        getEntityManager().flush();
+//    }
 }

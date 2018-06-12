@@ -10,12 +10,13 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "theme", schema = "spring_t", uniqueConstraints = {@UniqueConstraint(columnNames = "id")})
+@Table(name = "theme", schema = "spring_t", uniqueConstraints = {@UniqueConstraint(columnNames = "idTheme")})
 public class Theme implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @SequenceGenerator(name = "pc_seq_theme", sequenceName = "pc_seq_theme", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pc_seq_theme")
+    @Column(name = "idTheme", nullable = false)
+    private Integer idTheme;
 
     @NotEmpty
     @Size(min = 5, max = 50)
@@ -23,12 +24,10 @@ public class Theme implements Serializable {
     private String head;
 
     @NotEmpty
-//    @Temporal(TemporalType.DATE)
     @Column(name = "date", nullable = false, unique = false)
     private LocalDate date;
 
     @NotEmpty
-//    @Temporal(TemporalType.DATE)
     @Column(name = "end_date", nullable = false, unique = false)
     private LocalDate end_date;
 
@@ -37,24 +36,34 @@ public class Theme implements Serializable {
     @Column(name = "description", length = 255, nullable = false, unique = false)
     private String description;
 
-    @OneToOne
-    @JoinColumn(name = "fk_f_id", referencedColumnName = "id")
+//    @OneToOne
+//    @JoinColumn(name = "fk_f_id", referencedColumnName = "id")
+//    private Foto foto;
+//
+//    @OneToOne
+//    @JoinColumn(name = "fk_v_id", referencedColumnName = "id")
+//    private Video video;
+//
+//    @OneToOne
+//    @JoinColumn(name = "fk_m_id", referencedColumnName = "id")
+//    private Money money;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "theme")
     private Foto foto;
 
-    @OneToOne
-    @JoinColumn(name = "fk_v_id", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "theme")
     private Video video;
 
-    @OneToOne
-    @JoinColumn(name = "fk_m_id", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "theme")
     private Money money;
+
 
     @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL)
     private Set<Like> likes = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
-    private User user;
+    @JoinColumn(name = "idUser", nullable = true)
+    private User userTheme;
 
     public Theme() {
     }
@@ -67,15 +76,15 @@ public class Theme implements Serializable {
         this.video = video;
         this.money = money;
         this.likes = likes;
-        this.user = user;
+        this.userTheme = user;
     }
 
     public Integer getId() {
-        return id;
+        return idTheme;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.idTheme = id;
     }
 
     public String getHead() {
@@ -143,11 +152,11 @@ public class Theme implements Serializable {
     }
 
     public User getUser() {
-        return user;
+        return userTheme;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        this.userTheme = user;
     }
 
     @Override
@@ -169,7 +178,7 @@ public class Theme implements Serializable {
     @Override
     public String toString() {
         return "Theme{" +
-                "id=" + id +
+                "id=" + idTheme +
                 ", head='" + head + '\'' +
                 ", date=" + date +
                 ", end_date=" + end_date +
@@ -178,7 +187,7 @@ public class Theme implements Serializable {
                 ", video=" + video +
                 ", money=" + money +
                 ", likes=" + likes +
-                ", user=" + user +
+                ", user=" + userTheme +
                 '}';
     }
 }

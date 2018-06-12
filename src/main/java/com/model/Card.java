@@ -10,7 +10,8 @@ import java.util.Objects;
 @Table(name = "card", schema = "spring_t", uniqueConstraints = {@UniqueConstraint(columnNames = "id")})
 public class Card implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "pc_seq_card", sequenceName = "pc_seq_card", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pc_seq_card")
     @Column(name = "id")
     private Integer id;
 
@@ -25,8 +26,8 @@ public class Card implements Serializable{
     private Integer number_card;
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = true)
-    private User user;
+    @JoinColumn(name = "idUser", nullable = true)
+    private User userCard;
 
     public Card() {
     }
@@ -34,7 +35,7 @@ public class Card implements Serializable{
     public Card(@NotEmpty @Size(min = 5, max = 15) String name_bank, @NotEmpty @Size(min = 15, max = 25) Integer number_card, User user) {
         this.name_bank = name_bank;
         this.number_card = number_card;
-        this.user = user;
+        this.userCard = user;
     }
 
     public Integer getId() {
@@ -62,11 +63,11 @@ public class Card implements Serializable{
     }
 
     public User getUser() {
-        return user;
+        return userCard;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        this.userCard = user;
     }
 
     @Override
@@ -89,7 +90,7 @@ public class Card implements Serializable{
                 "id=" + id +
                 ", name_bank='" + name_bank + '\'' +
                 ", number_card=" + number_card +
-                ", user=" + user +
+                ", user=" + userCard +
                 '}';
     }
 }

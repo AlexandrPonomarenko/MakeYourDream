@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@Service("userService")
 @Transactional
 public class UserServiceImpl implements UserService{
 
@@ -34,13 +34,15 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUser(User user) {
-        User entity = userDAO.findById(user.getId());
-        if(entity != null){
-            entity.setId(user.getId());
-            entity.setName(user.getName());
-            entity.setLogin(user.getLogin());
-            entity.setPassword(user.getPassword());
-        }
+//        User entity = userDAO.findById(user.getId());
+//        if(entity != null){
+//            entity.setId(user.getId());
+//            entity.setName(user.getName());
+//            entity.setLogin(user.getLogin());
+//            entity.setPassword(user.getPassword());
+//        }
+        userDAO.updateUser(user);
+
     }
 
     @Override

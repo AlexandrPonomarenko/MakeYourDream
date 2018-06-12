@@ -11,26 +11,38 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:annotation-config/>
+    <!--<context:component-scan base-package="com"/>-->
+
+    <!--<import resource="WEB-INF/db-config.xml"/>-->
+    <!--<context:annotation-config/>-->
+
+    <!--<bean id="basicDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">-->
+        <!--<property name="driverClassName" value="${jdbc.driverClassName}"/>-->
+        <!--<property name="url" value="${jdbc.url}"/>-->
+        <!--<property name="username" value="${jdbc.username}"/>-->
+        <!--<property name="password" value="${jdbc.password}"/>-->
+    <!--</bean>-->
 
     <context:component-scan base-package="com"/>
-    <context:property-placeholder location="classpath:application.properties"/>
+    <context:property-placeholder location="classpath:application-test.properties"/>
 
-    <bean id="basicDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" destroy-method="close">
+    <bean id="basicDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
-
+    <bean name="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
     <bean id="entityManagerFactoryBean" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
         <property name="dataSource" ref="basicDataSource"/>
-        <!--<property name="persistenceUnitName" value="myJpaPersistenceUnit"/>-->
+        <property name="persistenceUnitName" value="myJpaPersistenceUnit"/>
         <property name="packagesToScan">
             <list>
                 <value>com.model</value>
+                <value>com.service</value>
             </list>
         </property>
         <property name="jpaProperties">
@@ -47,16 +59,10 @@
         <property name="entityManagerFactory" ref="entityManagerFactoryBean"/>
     </bean>
 
-    <!--<bean class="com.dao.daoImpl.UserImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.CardImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.ThemeImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.VideoImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.FotoImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.LikeImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.MoneyImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.RoleImpl"/>-->
-
-    <!--<tx:annotation-driven transaction-manager="txManager"/>-->
-    <tx:annotation-driven/>
+    <!--<bean class="com.service.serviceImpl.RoleServiceImpl"/>-->
+    <!--<bean class="com.service.serviceImpl.UserServiceImpl"/>-->
+    <!--<bean class="com.service.serviceImpl.RoleServiceImpl"/>-->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+    <tx:annotation-driven transaction-manager="txManager"/>
 
 </beans>

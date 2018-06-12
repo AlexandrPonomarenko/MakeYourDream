@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@Service("themeService")
 @Transactional
 public class ThemeServiceImpl implements ThemeService{
 
@@ -29,5 +29,10 @@ public class ThemeServiceImpl implements ThemeService{
     @Override
     public Theme findById(int id) {
         return themeDAO.findById(id);
+    }
+
+    @Override
+    public void saveTheme(Theme theme) {
+        themeDAO.saveTheme(theme);
     }
 }

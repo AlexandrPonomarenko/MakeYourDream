@@ -5,7 +5,7 @@ import com.dao.FotoDAO;
 import com.model.Foto;
 import org.springframework.stereotype.Repository;
 
-@Repository("FotoDAO")
+@Repository("fotoDAO")
 public class FotoImpl extends AbstractDAO<Integer, Foto> implements FotoDAO {
 
     @Override

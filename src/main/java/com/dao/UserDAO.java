@@ -10,4 +10,6 @@ public interface UserDAO {
     void save(User user);
     void deleteByLogin(String login);
     List<User> findAllUsers();
+//    void flushEM();
+    void updateUser(User user);
 }

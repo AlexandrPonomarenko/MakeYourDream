@@ -6,9 +6,10 @@ import com.model.Theme;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
+import java.util.Collection;
 import java.util.List;
 
-@Repository("ThemeDAO")
+@Repository("themeDAO")
 public class ThemeImpl extends AbstractDAO<Integer, Theme> implements ThemeDAO{
 
     @SuppressWarnings("unchecked")
@@ -27,6 +28,10 @@ public class ThemeImpl extends AbstractDAO<Integer, Theme> implements ThemeDAO{
                     .createQuery("SELECT t FROM Theme t WHERE t.head LIKE :head")
                     .setParameter("head", themeHead)
                     .getSingleResult();
+
+            if(theme != null){
+                initializeCollection(theme.getLikes());
+            }
             return theme;
         }catch (NoResultException e){
             return null;
@@ -36,5 +41,27 @@ public class ThemeImpl extends AbstractDAO<Integer, Theme> implements ThemeDAO{
     @Override
     public Theme findById(int id) {
         return getByKey(id);
+    }
+
+    @Override
+    public void saveTheme(Theme theme) {
+        persist(theme);
+    }
+
+    @Override
+    public void updateTheme(Theme theme) {
+        update(theme);
+    }
+
+    @Override
+    public void deleteTheme(Theme theme) {
+        delete(theme);
+    }
+
+    protected void initializeCollection(Collection<?> collection) {
+        if(collection == null) {
+            return;
+        }
+        collection.iterator().hasNext();
     }
 }

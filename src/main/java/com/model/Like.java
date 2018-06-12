@@ -9,7 +9,8 @@ import java.util.Objects;
 @Table(name = "like", schema = "spring_t", uniqueConstraints = {@UniqueConstraint(columnNames = "id")})
 public class Like implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "pc_seq_like", sequenceName = "pc_seq_like", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pc_seq_like")
     @Column(name = "id")
     private Integer id;
 
@@ -21,7 +22,7 @@ public class Like implements Serializable {
     private String login_man;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "idTheme")
     private Theme theme;
 
     public Like() {

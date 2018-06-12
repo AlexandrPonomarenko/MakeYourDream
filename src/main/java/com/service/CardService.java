@@ -10,4 +10,5 @@ public interface CardService {
     Card findByCardNumber(Integer numberCard);
     Card findById(int id);
     void deleteByIdNumberCard(Integer numberCard);
+    void updateCard(Card card);
 }

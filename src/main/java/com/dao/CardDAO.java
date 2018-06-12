@@ -10,4 +10,5 @@ public interface CardDAO {
     Card findByCardNumber(Integer numberCard);
     Card findById(int id);
     void deleteByNumberCard(Integer numberCard);
+    void updateCard(Card card);
 }

@@ -8,4 +8,5 @@ public interface ThemeService {
     List<Theme> findAllThemes();
     Theme findByThemeHead(String themeHead);
     Theme findById(int id);
+    void saveTheme(Theme theme);
 }

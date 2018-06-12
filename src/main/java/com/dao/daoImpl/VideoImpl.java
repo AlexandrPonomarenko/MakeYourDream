@@ -5,7 +5,7 @@ import com.dao.VideoDAO;
 import com.model.Video;
 import org.springframework.stereotype.Repository;
 
-@Repository("VideoDAO")
+@Repository("videoDAO")
 public class VideoImpl extends AbstractDAO<Integer, Video> implements VideoDAO {
     @Override
     public Video findById(int id) {

@@ -5,7 +5,7 @@ import com.dao.LikeDAO;
 import com.model.Like;
 import org.springframework.stereotype.Repository;
 
-@Repository("LikeDAO")
+@Repository("likeDAO")
 public class LikeImpl extends AbstractDAO<Integer, Like> implements LikeDAO{
 
     @Override

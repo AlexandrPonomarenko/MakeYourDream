@@ -11,12 +11,13 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "users", schema = "spring_t", uniqueConstraints = {@UniqueConstraint(columnNames = "id")})
+@Table(name = "users", schema = "spring_t", uniqueConstraints = {@UniqueConstraint(columnNames = "idUser")})
 public class User implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
-    private Integer id;
+    @SequenceGenerator(name = "pc_seq_user", sequenceName = "pc_seq_user", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pc_seq_user")
+    @Column(name = "idUser")
+    private Integer idUser;
 
     @NotEmpty
     @Size(min = 5, max = 20)
@@ -48,10 +49,10 @@ public class User implements Serializable{
     @JoinColumn(name = "id_role", nullable = false)
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userCard", cascade = CascadeType.ALL)
     private Set<Card> cards = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userTheme", cascade = CascadeType.ALL)
     private Set<Theme> themes = new HashSet<>();
 
     public User() {
@@ -67,11 +68,11 @@ public class User implements Serializable{
     }
 
     public Integer getId() {
-        return id;
+        return idUser;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.idUser = id;
     }
 
     public String getName() {
@@ -143,7 +144,7 @@ public class User implements Serializable{
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
+        return Objects.equals(idUser, user.idUser) &&
                 Objects.equals(getLogin(), user.getLogin()) &&
                 Objects.equals(getEmail(), user.getEmail()) &&
                 Objects.equals(getDate(), user.getDate());
@@ -152,19 +153,21 @@ public class User implements Serializable{
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, getLogin(), getEmail(), getDate());
+        return Objects.hash(idUser, getLogin(), getEmail(), getDate());
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "idUser=" + idUser +
                 ", name='" + name + '\'' +
                 ", login='" + login + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", date=" + date +
-                ", role=" + role +
+                ", role=" + role.getNameRole() +
+                ", cards=" + cards.size() +
+                ", themes=" + themes.size() +
                 '}';
     }
 }

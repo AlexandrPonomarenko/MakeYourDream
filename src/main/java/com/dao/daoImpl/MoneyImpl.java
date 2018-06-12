@@ -5,7 +5,7 @@ import com.dao.MoneyDAO;
 import com.model.Money;
 import org.springframework.stereotype.Repository;
 
-@Repository("MoneyDAO")
+@Repository("moneyDAO")
 public class MoneyImpl extends AbstractDAO<Integer, Money> implements MoneyDAO {
 
     @Override

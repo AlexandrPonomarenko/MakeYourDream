@@ -13,17 +13,14 @@
     </Appenders>
     <Loggers>
 
-        <!--<Logger name="com" level="trace">-->
+        <!--<Logger name="test">-->
             <!--<AppenderRef ref="Console"/>-->
-        <!--</Logger>-->
-        <!--<Logger name="test/">-->
-            <!--<AppenderRef ref="Console"/>-->
-            <!--<AppenderRef ref="File"/>-->
+            <!--&lt;!&ndash;<AppenderRef ref="File"/>&ndash;&gt;-->
         <!--</Logger>-->
 
-        <Root level="error">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
+        <Root level="info">
+            <Appender-ref ref="Console"/>
+            <Appender-ref ref="File"/>
         </Root>
     </Loggers>
 </Configuration>

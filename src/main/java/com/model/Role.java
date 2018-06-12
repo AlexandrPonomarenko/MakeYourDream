@@ -12,7 +12,8 @@ import java.util.Set;
 @Table(name = "role", schema = "spring_t", uniqueConstraints = {@UniqueConstraint(columnNames = "id_role")})
 public class Role implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "pc_seq_role", sequenceName = "pc_seq_role", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pc_seq_role")
     @Column(name = "id_role")
     private Integer id_role;
 
@@ -22,7 +23,7 @@ public class Role implements Serializable {
     private String name_role;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    private Set<User> users = new HashSet<>();
+    private Set<User> users = new HashSet<User>();
 
     public Role() {
     }
@@ -72,7 +73,7 @@ public class Role implements Serializable {
         return "Role{" +
                 "id_role=" + id_role +
                 ", name_role='" + name_role + '\'' +
-                ", users=" + users +
+                ", users=" + users.size() +
                 '}';
     }
 }

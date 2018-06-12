@@ -9,7 +9,8 @@ import java.util.Objects;
 @Table(name = "video", schema = "spring_t", uniqueConstraints = {@UniqueConstraint(columnNames = "id")})
 public class Video implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "pc_seq_video", sequenceName = "pc_seq_video", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pc_seq_video")
     @Column(name = "id", nullable = false, insertable = false, updatable = false)
     private Integer id;
 
@@ -25,7 +26,11 @@ public class Video implements Serializable {
     @Column(name = "path3", nullable = true, unique = false)
     private String path3;
 
-    @OneToOne(mappedBy = "video", cascade = CascadeType.ALL)
+//    @OneToOne(mappedBy = "video", cascade = CascadeType.ALL)
+//    private Theme theme;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idTheme", nullable = true)
     private Theme theme;
 
     public Video() {

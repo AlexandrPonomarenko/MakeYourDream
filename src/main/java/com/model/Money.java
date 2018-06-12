@@ -8,7 +8,8 @@ import java.util.Objects;
 @Table(name = "money", schema = "spring_t", uniqueConstraints = {@UniqueConstraint(columnNames = "id")})
 public class Money implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "pc_seq_money", sequenceName = "pc_seq_money", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pc_seq_money")
     @Column(name = "id", nullable = false, insertable = false, updatable = false)
     private Integer id;
 
@@ -18,7 +19,11 @@ public class Money implements Serializable {
     @Column(name = "get_money", nullable = false)
     private Integer get_money;
 
-    @OneToOne(mappedBy = "money", cascade = CascadeType.ALL)
+//    @OneToOne(mappedBy = "money", cascade = CascadeType.ALL)
+//    private Theme theme;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idTheme", nullable = true)
     private Theme theme;
 
     public Money() {
