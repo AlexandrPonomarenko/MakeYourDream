@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="thymeleaf/header :: header">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    <body>
+    <div th:replace="thymeleaf/navigation :: navigation"></div>
+
+        <div layout:fragment="content">
+
+        </div>
+
+        <div th:replace="thymeleaf/footer :: footer"></div>
+
+    </body>
+</html>

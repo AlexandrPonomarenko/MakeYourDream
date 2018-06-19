@@ -16,6 +16,7 @@ public class UserImpl extends AbstractDAO<Integer, User> implements UserDAO{
     public User findById(int id) {
         User user = getByKey(id);
         if(user != null){
+            initializeCollection(user.getCards());
             initializeCollection(user.getThemes());
         }
         return user;

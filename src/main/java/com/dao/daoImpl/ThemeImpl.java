@@ -18,6 +18,11 @@ public class ThemeImpl extends AbstractDAO<Integer, Theme> implements ThemeDAO{
         List<Theme> themes = getEntityManager()
                 .createQuery("SELECT t FROM Theme t ORDER BY t.head ASC")
                 .getResultList();
+        if (themes != null){
+            for (Theme theme: themes){
+                initializeCollection(theme.getLikes());
+            }
+        }
         return themes;
     }
 

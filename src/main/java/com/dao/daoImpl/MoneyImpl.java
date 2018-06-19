@@ -10,6 +10,6 @@ public class MoneyImpl extends AbstractDAO<Integer, Money> implements MoneyDAO {
 
     @Override
     public Money findById(int id) {
-        return null;
+        return getByKey(id);
     }
 }

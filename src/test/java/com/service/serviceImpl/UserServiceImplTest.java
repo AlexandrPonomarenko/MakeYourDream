@@ -28,7 +28,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UserServiceImplTest {
 
-    private static final Logger logger = LogManager.getLogger(RoleServiceImplTest.class);
+    private static final Logger logger = LogManager.getLogger(UserServiceImplTest.class);
 
     @Autowired
     public UserService userService;

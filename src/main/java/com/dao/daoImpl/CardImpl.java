@@ -15,7 +15,7 @@ public class CardImpl extends AbstractDAO<Integer, Card> implements CardDAO{
     @Override
     public List<Card> findAllCards() {
         List<Card> cards =  getEntityManager()
-                .createQuery("SELECT c FROM Card c ORDER BY r.name_bank ASC")
+                .createQuery("SELECT c FROM Card c ORDER BY c.name_bank ASC")
                 .getResultList();
         return cards;
     }
@@ -37,7 +37,7 @@ public class CardImpl extends AbstractDAO<Integer, Card> implements CardDAO{
     public Card findByCardNumber(Integer numberCard) {
         try {
             Card card = (Card) getEntityManager()
-                    .createQuery("SELECT c FROM Card c WHERE c.number_card LIKE :number_card")
+                    .createQuery("SELECT c FROM Card c WHERE c.number_card = :number_card")
                     .setParameter("number_card", numberCard)
                     .getSingleResult();
             return card;
@@ -49,7 +49,7 @@ public class CardImpl extends AbstractDAO<Integer, Card> implements CardDAO{
     @Override
     public void deleteByNumberCard(Integer numberCard) {
         Card card = (Card) getEntityManager()
-                .createQuery("SELECT c FROM Card c WHERE c.number_card LIKE :number_card")
+                .createQuery("SELECT c FROM Card c WHERE c.number_card = :number_card")
                 .setParameter("number_card", numberCard)
                 .getSingleResult();
         delete(card);

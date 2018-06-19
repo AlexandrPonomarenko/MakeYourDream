@@ -183,11 +183,11 @@ public class Theme implements Serializable {
                 ", date=" + date +
                 ", end_date=" + end_date +
                 ", description='" + description + '\'' +
-                ", foto=" + foto +
-                ", video=" + video +
-                ", money=" + money +
-                ", likes=" + likes +
-                ", user=" + userTheme +
+                ", foto=" + foto.getId() +
+                ", video=" + video.getId() +
+                ", money=" + money.getId() +
+                ", likes=" + likes.size() +
+                ", user=" + userTheme.getLogin() +
                 '}';
     }
 }

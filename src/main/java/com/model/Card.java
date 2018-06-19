@@ -27,6 +27,7 @@ public class Card implements Serializable{
 
     @ManyToOne
     @JoinColumn(name = "idUser", nullable = true)
+
     private User userCard;
 
     public Card() {
@@ -90,7 +91,7 @@ public class Card implements Serializable{
                 "id=" + id +
                 ", name_bank='" + name_bank + '\'' +
                 ", number_card=" + number_card +
-                ", user=" + userCard +
+                ", user=" + userCard.getLogin() +
                 '}';
     }
 }

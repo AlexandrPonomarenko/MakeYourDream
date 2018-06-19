@@ -32,9 +32,9 @@ public class RoleServiceImplTest {
     private static final Logger logger = LogManager.getLogger(RoleServiceImplTest.class);
 
     @Autowired
-    private RoleService roleService;
+    public RoleService roleService;
 
-    public Role role1;
+    private Role role1;
 
     @Before
     public void setUp() throws Exception {
@@ -87,7 +87,7 @@ public class RoleServiceImplTest {
     }
 
     @Test
-//    @Transactional
+    @Transactional
 //    @Rollback(true)
     public void updateTest() {
         logger.warn("updateTest");
@@ -96,9 +96,10 @@ public class RoleServiceImplTest {
     }
 
     @Test
+    @Transactional
     public void deleteRoleTest(){
         logger.warn("deleteRoleTest");
-        role1 = roleService.findById(71);
+        role1 = roleService.findById(68);
         assertNotNull(role1);
         roleService.delete(role1.getNameRole());
     }
