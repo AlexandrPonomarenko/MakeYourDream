@@ -1,10 +1,63 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{/thymeleaf/layout}">
 <head>
-    <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
     <h1>AUTHORIZATION</h1>
+
+    <div layout:fragment="content">
+
+        <div th:if="${param.success}">
+            <div class="alert alert-info">
+                You've successfully registered to our awesome app!
+            </div>
+        </div>
+        <div th:if="${param.logout}">
+            <div class="alert alert-info">
+                You have been logged out.
+            </div>
+        </div>
+        <form name="f" th:action="@{/authorization}" method="post">
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">
+                    Invalid login or password.
+                </div>
+            </div>
+            <!--th:classappend="${error != null}? 'has-error':''"-->
+            <div class="row">
+                <div class="col">
+                    <span th:text="${masage}"></span>
+                    <label for="username">Login</label>
+                    <input type="text" name="username" id="username" class="form-control" placeholder="Login" autofocus="autofocus">
+                </div>
+                <div class="col">
+                    <label for="password">Password</label>
+                    <span th:text="${error}"></span>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <!--<p th:text="${_csrf.parameterName} + ${_csrf.token}"></p>-->
+                    <!--<p th:text="${_csrf.token}"></p>-->
+                </div>
+            </div>
+            <div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input type="submit"
+                                   name="login-submit"
+                                   id="login-submit"
+                                   class="form-control btn btn-info"
+                                   value="Log In"/>
+                        </div>
+                    </div>
+                </div>
+                <span>Already registered?<a href="/" th:href="@{/authorization}">Forget your password or login?</a></span>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

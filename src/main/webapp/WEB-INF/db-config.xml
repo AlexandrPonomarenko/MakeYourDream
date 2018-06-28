@@ -4,15 +4,17 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <context:component-scan base-package="com"/>
+    <context:component-scan base-package="com.service"/>
+    <!--<jpa:repositories base-package="com.dao"/>-->
     <context:property-placeholder location="classpath:application.properties"/>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -43,20 +45,14 @@
         </property>
     </bean>
 
-    <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactoryBean"/>
     </bean>
 
-    <!--<bean class="com.dao.daoImpl.UserImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.CardImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.ThemeImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.VideoImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.FotoImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.LikeImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.MoneyImpl"/>-->
-    <!--<bean class="com.dao.daoImpl.RoleImpl"/>-->
-
     <!--<tx:annotation-driven transaction-manager="txManager"/>-->
     <tx:annotation-driven/>
+    <!--<jpa:repositories base-package="com"/>-->
+    <!--<context:component-scan base-package="com.dao"/>-->
+    <!--<tx:annotation-driven/>-->
 
 </beans>

@@ -1,10 +1,98 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{/thymeleaf/layout}">
 <head>
-    <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <h1>REGISTRATION</h1>
+    <!--<h1>REGISTRATION</h1>-->
+    <div layout:fragment="content">
+
+        <!--<div th:if="${param.success}">-->
+            <!--<div class="alert alert-info">-->
+                <!--You've successfully registered to our awesome app!-->
+            <!--</div>-->
+        <!--</div>-->
+        <h1>REGISTRATION</h1>
+        <form th:action="@{/registration}" th:object="${userForm}" method="post">
+
+            <p class="error-message"
+                th:if="${#fields.hasGlobalErrors()}"
+                th:each="error : ${#fields.errors('global')}"
+                th:text="${error}">Validation error</p>
+
+            <div class="form-row">
+                <div class="col-md-4 mb-3" th:classappend="${#fields.hasErrors('name')}? 'has-error':''">
+                    <label for="validationName">Name</label>
+                    <input type="text" class="form-control is-valid" id="validationName"
+                           placeholder="Name" value="Name" th:field="*{name}" required>
+                    <!--<div class="valid-feedback">-->
+                        <!--Looks good!-->
+                    <!--</div>-->
+                    <p class="error-message"
+                       th:each="error: ${#fields.errors('name')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="col-md-4 mb-3" th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
+                    <label for="validationEmail">Email</label>
+                    <input type="email" class="form-control is-valid" id="validationEmail"
+                           placeholder="Email" value="Email" th:field="*{email}" required>
+                    <!--<div class="valid-feedback">-->
+                        <!--Looks good!-->
+                    <!--</div>-->
+                    <p class="error-message"
+                       th:each="error: ${#fields.errors('email')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="col-md-4 mb-3" th:classappend="${#fields.hasErrors('login')}? 'has-error':''">
+                    <label for="validationLogin">Login</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupPrepend3">@</span>
+                        </div>
+                        <input type="text" class="form-control is-invalid" id="validationLogin"
+                               placeholder="Login" aria-describedby="inputGroupPrepend3" th:field="*{login}" required>
+                        <!--<div class="invalid-feedback">-->
+                            <!--Please choose a login.-->
+                        <!--</div>-->
+                        <p class="error-message"
+                           th:each="error: ${#fields.errors('login')}"
+                           th:text="${error}">Validation error</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-4 mb-3" th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
+                    <label for="validationPassword">Password</label>
+                    <input type="password" class="form-control is-invalid" id="validationPassword"
+                           placeholder="Password"  th:field="*{password}" required>
+                    <!--<div class="invalid-feedback">-->
+                        <!--Please provide a valid password.-->
+                    <!--</div>-->
+                    <p class="error-message"
+                       th:each="error: ${#fields.errors('password')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+
+                <div class="col-md-4 mb-3" th:classappend="${#fields.hasErrors('passwordTwo')}? 'has-error':''">
+                    <label for="validationPasswordConfirm">Repit Password</label>
+                    <input type="password" class="form-control is-invalid" id="validationPasswordConfirm"
+                           placeholder="Password Confirm" th:field="*{passwordTwo}" required>
+                    <!--<div class="invalid-feedback">-->
+                        <!--Please provide a valid passwordConfirm.-->
+                    <!--</div>-->
+                    <p class="error-message"
+                       th:each="error: ${#fields.errors('passwordTwo')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-primary" type="submit">Submit form</button>
+                <span>Already registered? <a href="/" th:href="@{/authorization}">Login here</a></span>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

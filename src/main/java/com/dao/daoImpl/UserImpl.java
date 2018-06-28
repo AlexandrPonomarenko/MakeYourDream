@@ -39,6 +39,22 @@ public class UserImpl extends AbstractDAO<Integer, User> implements UserDAO{
         }
     }
 
+    @Override
+    public User findByEmail(String email) {
+        try {
+            User user = (User) getEntityManager()
+                    .createQuery("SELECT u FROM User u WHERE u.email LIKE :email")
+                    .setParameter("email", email)
+                    .getSingleResult();
+            if(user != null){
+                initializeCollection(user.getThemes());
+                initializeCollection(user.getCards());
+            }
+            return user;
+        }catch (NoResultException e){
+            return null;
+        }
+    }
 
     public void save(User user) {
         persist(user);

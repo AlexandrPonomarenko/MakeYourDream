@@ -3,6 +3,7 @@ package com.model;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -19,28 +20,32 @@ public class User implements Serializable{
     @Column(name = "idUser")
     private Integer idUser;
 
-    @NotEmpty
+    @NotNull
     @Size(min = 5, max = 20)
     @Column(name = "name", unique = false, length = 20, nullable = false)
     private String name;
 
-    @NotEmpty
-    @Size(min = 5, max = 10)
-    @Column(name = "login", unique = true, length = 10, nullable = false)
+    @NotNull
+    @Size(min = 5, max = 25)
+    @Column(name = "login", unique = true, length = 25, nullable = false)
     private String login;
 
-    @NotEmpty
+    @NotNull
     @Size(min = 5, max = 25)
-    @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")
+//    @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")
     @Column(name = "email", unique = true, length = 25, nullable = false)
     private String email;
 
-    @NotEmpty
-    @Size(min = 8, max = 30)
-    @Column(name = "password", unique = false, length = 30, nullable = false)
+    @NotNull
+    @Size(min = 8, max = 255)
+    @Column(name = "password", unique = false, length = 255, nullable = false)
     private String password;
 
-    @NotEmpty
+    @Transient
+    private String passwordTwo;
+
+//    @NotEmpty
+    @NotNull
 //    @Temporal(TemporalType.DATE)
     @Column(name = "date", unique = false, nullable = false)
     private LocalDate date;
@@ -101,6 +106,14 @@ public class User implements Serializable{
 
     public String getPassword() {
         return password;
+    }
+
+    public String getPasswordTwo() {
+        return passwordTwo;
+    }
+
+    public void setPasswordTwo(String passwordTwo) {
+        this.passwordTwo = passwordTwo;
     }
 
     public void setPassword(String password) {
@@ -164,6 +177,7 @@ public class User implements Serializable{
                 ", login='" + login + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", passwordTwo='" + passwordTwo + '\'' +
                 ", date=" + date +
                 ", role=" + role.getNameRole() +
                 ", cards=" + cards.size() +

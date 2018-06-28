@@ -87,11 +87,12 @@ public class RoleServiceImplTest {
     }
 
     @Test
-    @Transactional
+//    @Transactional
 //    @Rollback(true)
     public void updateTest() {
         logger.warn("updateTest");
-        role1.setNameRole("user2");
+        role1 = roleService.findByRoleName("none");
+        role1.setNameRole("NONE");
         roleService.update(role1);
     }
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:sec="http://www.springframework.org/schema/security"
+             xmlns:security="http://www.springframework.org/schema/c"
+             xsi:schemaLocation="
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-4.2.xsd
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <http security="none" pattern="/resources/**"/>
+
+    <http auto-config="true"
+          disable-url-rewriting="true"
+          use-expressions="true">
+        <!--<intercept-url pattern="/" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_NONE')"/>-->
+        <intercept-url pattern="/" access="permitAll()"/>
+        <!--<intercept-url pattern="/main" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_NONE')"/>-->
+        <!--<intercept-url pattern="/about" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_NONE')"/>-->
+        <intercept-url pattern="/main" access="permitAll()"/>
+        <intercept-url pattern="/about" access="permitAll()"/>
+        <intercept-url pattern="/registration" access="permitAll()"/>
+        <intercept-url pattern="/authorization" access="permitAll()"/>
+        <intercept-url pattern="/home" access="hasAnyRole('ADMIN', 'USER')"/>
+        <intercept-url pattern="/admin" access="hasRole('ADMIN')"/>
+
+        <form-login login-page="/authorization" login-processing-url="/authorization" default-target-url="/home"
+                    authentication-failure-url="/registration"
+                    username-parameter="username" password-parameter="password"/>
+        <csrf/>
+
+        <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
+        <access-denied-handler error-page="/accessDenied"/>
+        <logout logout-success-url="/authorization?logout"/>
+    </http>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userDetailsServiceImpl">
+            <password-encoder ref="encoder"></password-encoder>
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean id="userDetailsServiceImpl" class="com.service.security.UserDetailsServiceImpl"></beans:bean>
+
+    <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="11"/>
+    </beans:bean>
+
+    <!--<context:component-scan base-package="com.service" />-->
+</beans:beans>

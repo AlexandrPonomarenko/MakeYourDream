@@ -13,17 +13,29 @@
     </Appenders>
     <Loggers>
 
-        <!--<Logger name="com" level="trace">-->
-            <!--<AppenderRef ref="Console"/>-->
-        <!--</Logger>-->
+        <Logger name="com.controller.UserController" additivity="true">
+            <level value="DEBUG"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="org.springframework.web" additivity="true">
+            <level value="DEBUG"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="org.springframework.security" additivity="true">
+            <level value="WARNING"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
         <!--<Logger name="test/">-->
             <!--<AppenderRef ref="Console"/>-->
             <!--<AppenderRef ref="File"/>-->
         <!--</Logger>-->
 
-        <Root level="error">
+        <Root level="debug">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
+            <!--<AppenderRef ref="File"/>-->
         </Root>
     </Loggers>
 </Configuration>
